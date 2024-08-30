@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId    String   @unique
+  email     String
+  username  String
+  disabled  Boolean  @default(false)
+  tunables  Json?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([email])
+}
+
+model Groups {
+  id               String   @id @unique @default(cuid())
+  name             String
+  groupId          String   @unique
+  ownership        Json     @default("{\"userId\": \"\", \"username\": \"\"}")
+  early_access     Boolean? @default(true)
+  customisation    Json     @default("{\"color\":  \"\", \"wallpaper\": \"\"}")
+  tracking         Json     @default("{}")
+  payment_required Boolean?
+  stripe_id        String   @unique
+  disabled         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  syncedAt         DateTime @default(now())
+
+  @@index([id])
+  @@index([groupId])
+}
+
+model Permissions {
+  id          String @id @unique @default(cuid())
+  workspaceId String
+  permissions Json   @default("{}")
+
+  @@index([id])
+}
+
+model AuditLog {
+  id        String   @id @unique @default(cuid())
+  userInfo  Json     @default("{}")
+  event     String
+  detailed  String
+  createdAt DateTime @default(now())
+
+  @@index([id])
+}
+
+model Activity {
+  id            String  @id @unique @default(cuid())
+  workspace     String
+  userId        String
+  start         String
+  end           String?
+  ended         Boolean
+  game          String
+  duration      Int?
+  messages_sent Int?
+  game_details  Json
+}
+
+model EmailLinks {
+  id      String   @id @unique @default(uuid())
+  userId  String
+  code    String
+  email   String
+  expires DateTime
+
+  @@index([id])
+  @@index([userId])
+}

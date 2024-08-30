@@ -1,0 +1,27 @@
+{
+  "name": "app",
+  "version": "1.0.50",
+  "type": "module",
+  "scripts": {
+    "start": "bun run ./src/index.ts && prisma generate",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@elysiajs/bearer": "^1.0.2",
+    "@elysiajs/swagger": "^1.0.5",
+    "@fingerprintjs/fingerprintjs-pro": "^3.9.9",
+    "@fingerprintjs/fingerprintjs-pro-server-api": "^4.1.1",
+    "@prisma/client": "5.13.0",
+    "axios": "^1.7.2",
+    "body-parser": "^1.20.2",
+    "elysia": "latest",
+    "noblox.js": "^4.15.1",
+    "stripe": "^15.8.0"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.7",
+    "bun-types": "latest",
+    "prisma": "^5.14.0"
+  },
+  "module": "src/index.js"
+}
